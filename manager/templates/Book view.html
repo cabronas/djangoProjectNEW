@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table border="5px">
+        <tr>
+            <td>Book titles</td>
+            <td>Date</td>
+        </tr>
+        {% for Book in Books %}
+            <tr>
+                <td>
+                    {{ Book.title }}
+                </td>
+                <td>
+                    {{ Book.date }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
