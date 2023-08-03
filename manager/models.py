@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -18,6 +19,7 @@ class Comment(models.Model):
     text = models.TextField(verbose_name='Comment text')
     date = models.DateTimeField(auto_now=True, verbose_name='Comment date')
     book = models.ForeignKey(Book, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.book.title + " comment " + str(self.id)
