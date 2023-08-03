@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table border="3px" width="100%">
+        <tr>
+            <td>{{ Book.first.title }}</td>
+        </tr>
+        <tr>
+            <td>
+                {{ Book.first.text }}
+            </td>
+        </tr>
+    </table>
+    <form>
+    </form>
+    {% if Comments.count >= 0 %}
+        <table border="3px" width="100%">
+        <tr>
+            <td>Username</td>
+            <td>Comment text</td>
+            <td>Date</td>
+        </tr>
+        {% for comment in Comments %}
+            <tr>
+                <td>
+                    {{ comment.user.first_name }}
+                </td>
+                <td>
+                    {{ comment.text }}
+                </td>
+                <td>
+                    {{ comment.date }}
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+</table>
+{% endblock %}

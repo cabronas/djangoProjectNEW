@@ -1,11 +1,18 @@
 from django.shortcuts import render
 from django.views import View
 
-from manager.models import Book
+from manager.models import Book, Comment
 
 
 # Create your views here.
-class BookView(View):
+class BooksView(View):
     def get(self, request):
         data = {'Books': Book.objects.all()}
         return render(request, 'Book view.html', context=data)
+
+
+class BookView(View):
+    def post(self, request):
+        data = {'Book': Book.objects.filter(id=request.POST['BookButton']),
+                'Comments': Comment.objects.filter(book_id=request.POST['BookButton'])}
+        return render(request, 'ViewBook.html', context=data)

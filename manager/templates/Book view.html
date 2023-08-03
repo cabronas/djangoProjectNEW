@@ -2,18 +2,22 @@
 {% block content %}
     <table border="5px">
         <tr>
-            <td>Book titles</td>
+            <td>Book title</td>
             <td>Date</td>
         </tr>
-        {% for Book in Books %}
-            <tr>
-                <td>
-                    {{ Book.title }}
-                </td>
-                <td>
-                    {{ Book.date }}
-                </td>
-            </tr>
-        {% endfor %}
+        <form action='BookView' method='POST'>
+            {% for Book in Books %}
+                <tr>
+                    <td>
+                        <button name="BookButton" value="{{ Book.id }}" style="width:100%">
+                            {{ Book.title }}
+                        </button>
+                    </td>
+                    <td>
+                        {{ Book.date }}
+                    </td>
+                </tr>
+            {% endfor %}
+        </form>
     </table>
 {% endblock %}
