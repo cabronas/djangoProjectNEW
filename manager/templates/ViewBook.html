@@ -1,36 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
-    <table border="3px" width="100%">
-        <tr>
-            <td>{{ Book.first.title }}</td>
-        </tr>
-        <tr>
-            <td>
-                {{ Book.first.text }}
-            </td>
-        </tr>
-    </table>
-    Likes: {{ Book.likes }}
-    {% if Comments.count >= 0 %}
-        <table border="3px" width="100%">
-        <tr>
-            <td>Username</td>
-            <td>Comment text</td>
-            <td>Date</td>
-        </tr>
-        {% for comment in Comments %}
-            <tr>
-                <td>
-                    {{ comment.user.first_name }}
-                </td>
-                <td>
-                    {{ comment.text }}
-                </td>
-                <td>
-                    {{ comment.date }}
-                </td>
-            </tr>
-        {% endfor %}
+<table border="3px" width="100%">
+    <tr>
+        <td>{{ Book.first.title }}</td>
+    </tr>
+    <tr>
+        <td>
+            {{ Book.first.text }}
+        </td>
+    </tr>
+</table>
+Likes: {{ Book.first.likes.count }}
+<a href="{% url 'add_like' book_id=Book.first.id %}">Like</a>
+<form action='menu' method='get'>
+<button>
+    return
+</button>
+</form>
+{% if Comments.count >= 0 %}
+<table border="3px" width="100%">
+    <tr>
+        <td>Username</td>
+        <td>Comment text</td>
+        <td>Date</td>
+    </tr>
+    {% for comment in Comments %}
+    <tr>
+        <td>
+            {{ comment.user.first_name }}
+        </td>
+        <td>
+            {{ comment.text }}
+        </td>
+        <td>
+            {{ comment.date }}
+        </td>
+    </tr>
+    {% endfor %}
     {% endif %}
 </table>
 {% endblock %}

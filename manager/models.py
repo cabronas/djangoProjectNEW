@@ -11,7 +11,7 @@ class Book(models.Model):
     text = models.TextField(verbose_name='Book text')
     date = models.DateTimeField(auto_now=True, verbose_name='Addition date')
     author = models.ManyToManyField(User, related_name="books")
-    likes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(User, related_name="liked_books")
 
     def __str__(self):
         return self.title

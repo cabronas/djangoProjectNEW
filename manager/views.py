@@ -21,6 +21,12 @@ class BookView(View):
 
 class AddLikeView(View):
     def get(self, request, book_id):
-        Book.objects.get(id=book_id)
-        Book.likes += 1
-        return reverse('BookView')
+        if request.user.is_authenticated:
+            book = Book.objects.get(id=book_id)
+            if request.user not in book.likes.all():
+                book.likes.add(request.user)
+            else:
+                book.likes.remove(request.user)
+        data = {'Book': Book.objects.filter(id=book_id),
+                'Comments': Comment.objects.filter(book_id=book_id)}
+        return render(request, 'ViewBook.html', context=data)
