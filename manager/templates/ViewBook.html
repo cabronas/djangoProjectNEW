@@ -1,28 +1,47 @@
 {% extends 'base.html' %}
 {% block content %}
-<table border="3px" width="100%">
+<style>
+td, td {
+border-width: 2px;
+
+}
+</style>
+<table width="100%">
     <tr>
-        <td>{{ Book.first.title }}</td>
+        <td>Book name: {{ Book.title }}</td>
     </tr>
     <tr>
         <td>
-            {{ Book.first.text }}
+            Authors:
+            {% for au in Book.author.all %}
+            {{au.first_name}}
+            {%endfor%}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ Book.text }}
         </td>
     </tr>
 </table>
-Likes: {{ Book.first.likes.count }}
-<a href="{% url 'add_like' book_id=Book.first.id %}">Like</a>
-<form action='menu' method='get'>
-<button>
-    return
-</button>
-</form>
-{% if Comments.count >= 0 %}
+ <a href="{% url 'add_like' book_id=Book.id %}" class="btn btn-secondary rounded-0">
+     Likes: {{ Book.likes_count}}
+ </a>
+<!--<form action='add_like' method='GET'>-->
+<!-- <button name="BookButton" value="{{ Book.id }}">-->
+<!--     Like-->
+<!-- </button>-->
+<!--</form>-->
+ <a href="{% url 'return_to_menu' %}" class="btn btn-secondary rounded-0">
+     Return
+ </a>
+{% if Comments.count > 0 %}
 <table border="3px" width="100%">
     <tr>
         <td>Username</td>
         <td>Comment text</td>
         <td>Date</td>
+        <td>Likes</td>
     </tr>
     {% for comment in Comments %}
     <tr>
@@ -34,6 +53,9 @@ Likes: {{ Book.first.likes.count }}
         </td>
         <td>
             {{ comment.date }}
+        </td>
+        <td>
+            {{ comment.likes_comments}}
         </td>
     </tr>
     {% endfor %}

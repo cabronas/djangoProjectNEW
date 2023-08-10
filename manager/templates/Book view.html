@@ -1,24 +1,38 @@
 {% extends 'base.html' %}
 {% block content %}
-    <table border="5px">
-        <tr>
-            <td>Book title</td>
-            <td>Date</td>
-        </tr>
+<style>
+td, td {
+border-width: 2px;
+text-align: center;
+}
 
-        <form action='BookView' method='POST'>
-            {% for Book in Books %}
-                <tr>
-                    <td>
-                        <button name="BookButton" value="{{ Book.id }}" style="width:100%">
-                            {{ Book.title }}
-                        </button>
-                    </td>
-                    <td>
-                        {{ Book.date }}
-                    </td>
-                </tr>
-            {% endfor %}
-        </form>
-    </table>
+</style>
+<table border="5px">
+    <tr>
+        <td>Book title</td>
+        <td>Date</td>
+        <td>Authors</td>
+        <td>Likes</td>
+    </tr>
+        {% for Book in Books %}
+        <tr>
+            <td>
+                <a href="{% url 'BookView' book_id=Book.id %}" class="btn btn-secondary rounded-0 w-100">
+                    {{ Book.title }}
+                </a>
+            </td>
+            <td>
+                {{ Book.date }}
+            </td>
+            <td>
+                {% for au in Book.author.all %}
+                {{au.first_name}}
+                {%endfor%}
+            </td>
+            <td>
+                {{ Book.likes_count }}
+            </td>
+        </tr>
+        {% endfor %}
+</table>
 {% endblock %}
