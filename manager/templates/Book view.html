@@ -6,33 +6,51 @@ border-width: 2px;
 text-align: center;
 }
 
+
+
 </style>
+{% if user.is_authenticated %}
+<a href="{% url 'AddBook' %}" class="btn btn-secondary rounded-0 w-100">
+    Add Book
+</a>
+{% endif %}
 <table border="5px">
     <tr>
         <td>Book title</td>
         <td>Date</td>
         <td>Authors</td>
         <td>Likes</td>
+        <td></td>
     </tr>
-        {% for Book in Books %}
-        <tr>
-            <td>
-                <a href="{% url 'BookView' book_id=Book.id %}" class="btn btn-secondary rounded-0 w-100">
-                    {{ Book.title }}
-                </a>
-            </td>
-            <td>
-                {{ Book.date }}
-            </td>
-            <td>
-                {% for au in Book.author.all %}
-                {{au.first_name}}
-                {%endfor%}
-            </td>
-            <td>
-                {{ Book.likes_count }}
-            </td>
-        </tr>
-        {% endfor %}
+    {% for Book in Books %}
+    <tr>
+        <td>
+            <a href="{% url 'BookView' book_id=Book.id %}" class="btn btn-secondary rounded-0 w-100">
+                {{ Book.title }}
+            </a>
+        </td>
+        <td>
+            {{ Book.date }}
+        </td>
+        <td>
+            {% for au in Book.author.all %}
+            {{au.first_name}}
+            {%endfor%}
+        </td>
+        <td>
+            {{ Book.likes_count }}
+        </td>
+        <td>
+            {% if user in Book.author.all %}
+            <a href="{% url 'delete_book' book_id=Book.id %}" class="btn btn-secondary rounded-0 w-30">
+                Delete
+            </a>
+             <a href="{% url 'update_book' book_id=Book.id %}" class="btn btn-secondary rounded-0 w-30">
+                Update
+            </a>
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
 </table>
 {% endblock %}

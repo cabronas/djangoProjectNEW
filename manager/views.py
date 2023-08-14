@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 
+from manager.forms import AddBookForm
 from manager.models import Book, Comment
 
 
@@ -47,4 +48,49 @@ class AddLikeView(View):
 
 class Return_To_Menu(View):
     def get(self, request):
+        return redirect("menu")
+
+
+class DeleteBook(View):
+    def get(self, request, book_id):
+        if request.user.is_authenticated:
+            b = Book.objects.get(id=book_id)
+            if request.user in b.author.all():
+                b.delete()
+            return redirect("menu")
+        return redirect("menu")
+
+
+class UpdateBook(View):
+    def get(self, request, book_id):
+        book = Book.objects.get(id=book_id)
+        form = {'form': AddBookForm(instance=book),
+                'book': book}
+        return render(request, 'UpdateBook.html', form)
+
+    def post(self, request, book_id):
+        if request.user.is_authenticated:
+            b = Book.objects.get(id=book_id)
+            if request.user in b.author.all():
+                form = AddBookForm(data=request.POST, instance=b)
+                form.save()
+                return redirect("BookView", book_id=b.id)
+        return redirect("menu")
+
+
+class AddBookView(View):
+    def get(self, request):
+        form = {
+            'form': AddBookForm()
+        }
+        return render(request, 'AddBook.html', form)
+
+    def post(self, request):
+        if request.user.is_authenticated:
+            form = AddBookForm(request.POST)
+            if form.is_valid():
+                # data = request.POST
+                book: Book = form.save()
+                book.author.add(request.user)
+                return redirect("BookView", book_id=book.id)
         return redirect("menu")
