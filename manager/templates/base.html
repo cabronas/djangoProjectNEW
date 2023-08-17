@@ -7,8 +7,21 @@
 </head>
 <body>
 <div>
-{% block content %}
-{% endblock %}
+    <a href="{% url 'login' %}" class="btn btn-secondary rounded-0 w-100%">
+        LOGIN
+    </a>
+    <a href="{% url 'logout' %}" class="btn btn-secondary rounded-0 w-100%">
+        LOGOUT
+    </a>
+    <a href="{% url 'register' %}" class="btn btn-secondary rounded-0 w-100%">
+        REGISTER
+    </a>
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+    Hello {{ user.username }}
+    {% block content %}
+    {% endblock %}
 </div>
 </body>
 </html>

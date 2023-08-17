@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'manager',
     'django_seed',
+    'login',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'djangoProjectNEW.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates', 'manager.templates']
+        'DIRS': [BASE_DIR / 'templates', 'manager.templates', 'login.templates']
         ,
         'APP_DIRS': True,
         'OPTIONS': {
@@ -84,13 +85,21 @@ WSGI_APPLICATION = 'djangoProjectNEW.wsgi.application'
 #     'NAME': BASE_DIR / 'db.sqlite3',
 # }
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'books',
+    #     'USER': 'postgres',
+    #     'PASSWORD': os.environ.get('PASSWORD'),
+    #     'HOST': 'localhost',
+    #     'PORT': 5432
+    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'books',
-        'USER': 'postgres',
-        'PASSWORD': os.environ.get('PASSWORD'),
+        'NAME': 'docker',
+        'USER': 'sloj',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
-        'PORT': 5432
+        'PORT': 5000
     }
 }
 

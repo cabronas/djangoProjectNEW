@@ -1,9 +1,13 @@
+from django.contrib import messages
+from django.contrib.auth import login, logout
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+# from django.contrib.messages.context_processors import messages
 from django.db.models import Count, Prefetch
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views import View
 
-from manager.forms import AddBookForm
+from manager.forms import *
 from manager.models import Book, Comment
 
 

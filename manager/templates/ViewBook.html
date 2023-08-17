@@ -14,7 +14,7 @@ border-width: 2px;
         <td>
             Authors:
             {% for au in Book.author.all %}
-            {{au.first_name}}
+            {{au.username}}
             {%endfor%}
         </td>
     </tr>
